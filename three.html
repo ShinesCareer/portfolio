@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roda Youssef — HR Manager & People Partner</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --primary: #d4a373;
+      --primary-2: #e9c46a;
+      --accent: #264653;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(0,0,0,.3);
+    }
+    body.light {
+      --bg: #fefae0;
+      --surface: #ffffff;
+      --text: #264653;
+      --muted: #555;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background .3s, color .3s;
+    }
+    a { color: inherit; text-decoration: none; }
+    .section { padding: 100px 8%; }
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    .section-title::after {
+      content:'';
+      display:block;
+      width:60px; height:4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: fixed; top:0; left:0; width:100%;
+      display:flex; justify-content:space-between; align-items:center;
+      padding: 18px 8%;
+      background: rgba(15,23,42,.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    body.light .navbar { background: rgba(255,255,255,.85); border-bottom:1px solid #e2e8f0; }
+    .logo { font-size:1.4rem; font-weight:700; }
+    .logo span { color: var(--primary); }
+    .nav-links { display:flex; gap:30px; list-style:none; }
+    .nav-links a {
+      font-weight:500;
+      position:relative;
+      transition: color .3s;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-5px; left:0;
+      width:0; height:2px; background:var(--primary);
+      transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { width:100%; }
+    .theme-toggle, .burger {
+      background:none; border:none; color:var(--text);
+      font-size:1.2rem; cursor:pointer;
+    }
+    .burger { display:none; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 100vh;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 0 8%;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-content { flex:1; min-width:300px; }
+    .greeting { color: var(--primary); font-weight:600; letter-spacing:2px; }
+    .hero h1 {
+      font-size: 3.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 10px 0;
+    }
+    .hero h2 { font-size: 1.6rem; color: var(--muted); }
+    .typing { color: var(--primary); border-right: 2px solid var(--primary); padding-right:4px; }
+    .tagline { margin: 15px 0 25px; max-width: 500px; color: var(--muted); }
+    .hero-buttons { display:flex; gap:15px; flex-wrap:wrap; margin-bottom:25px; }
+    .socials { display:flex; gap:15px; }
+    .socials a {
+      width:42px; height:42px;
+      display:flex; align-items:center; justify-content:center;
+      border-radius:50%;
+      background: var(--surface);
+      transition: all .3s;
+    }
+    .socials a:hover {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      transform: translateY(-4px);
+      color: #fff;
+    }
+    .hero-img { flex:1; display:flex; justify-content:center; }
+    .avatar {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      display:flex; align-items:center; justify-content:center;
+      font-size: 5rem; font-weight:700; color:#fff;
+      box-shadow: var(--shadow);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight:600;
+      cursor:pointer;
+      border:none;
+      transition: all .3s;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#fff;
+    }
+    .btn.primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212,163,115,.4); }
+    .btn.outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+    }
+    .btn.outline:hover { background: var(--primary); color:#fff; }
+
+    /* ---------- ABOUT ---------- */
+    .about-wrap { max-width: 900px; margin: 0 auto; text-align:center; }
+    .about-text p { color: var(--muted); margin-bottom: 15px; }
+    .info-grid {
+      display:grid; grid-template-columns: repeat(2,1fr);
+      gap: 15px; margin: 25px 0;
+      text-align:left;
+    }
+    .info-grid div {
+      background: var(--surface);
+      padding: 12px 18px;
+      border-radius: var(--radius);
+    }
+
+    /* ---------- SKILLS ---------- */
+    .skills-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    .skill-card {
+      background: var(--surface);
+      padding: 25px;
+      border-radius: var(--radius);
+      text-align:center;
+      transition: transform .3s;
+    }
+    .skill-card:hover { transform: translateY(-8px); }
+    .skill-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+    .skill-card h3 { margin-bottom: 15px; }
+    .bar {
+      height: 8px; background: rgba(255,255,255,.1);
+      border-radius: 10px; overflow: hidden;
+    }
+    .bar > div {
+      height:100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      border-radius: 10px;
+      width:0;
+      transition: width 1.5s ease;
+    }
+
+    /* ---------- EXPERIENCE TIMELINE ---------- */
+    .timeline {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 40px;
+    }
+    .timeline::before {
+      content:'';
+      position: absolute;
+      left: 15px; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--primary), var(--primary-2));
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      background: var(--surface);
+      padding: 25px;
+      border-radius: var(--radius);
+      margin-bottom: 30px;
+      transition: transform .3s;
+    }
+    .timeline-item:hover { transform: translateX(10px); }
+    .timeline-item::before {
+      content:'';
+      position: absolute;
+      left: -33px; top: 30px;
+      width: 18px; height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+    }
+    .timeline-date {
+      display:inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: .85rem;
+      margin-bottom: 10px;
+    }
+    .timeline-item h3 { margin-bottom: 5px; }
+    .timeline-item .company {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .timeline-item ul { list-style: none; }
+    .timeline-item ul li {
+      color: var(--muted);
+      padding: 4px 0;
+      padding-left: 20px;
+      position: relative;
+      font-size: .95rem;
+    }
+    .timeline-item ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+
+    /* ---------- EDUCATION ---------- */
+    .edu-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .edu-card {
+      background: var(--surface);
+      padding: 25px;
+      border-radius: var(--radius);
+      text-align:center;
+      transition: transform .3s;
+      border-top: 4px solid var(--primary);
+    }
+    .edu-card:hover { transform: translateY(-8px); }
+    .edu-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 12px; }
+    .edu-card h3 { margin-bottom: 8px; font-size: 1.1rem; }
+    .edu-card p { color: var(--muted); font-size: .9rem; }
+
+    /* ---------- CONTACT ---------- */
+    .contact-wrap {
+      display:grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .contact-info div {
+      display:flex; align-items:center; gap:15px;
+      margin-bottom: 20px;
+      background: var(--surface);
+      padding: 15px;
+      border-radius: var(--radius);
+    }
+    .contact-info i {
+      font-size: 1.4rem;
+      color: var(--primary);
+      width: 40px; height:40px;
+      background: rgba(212,163,115,.15);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .contact-form { display:flex; flex-direction:column; gap:15px; }
+    .contact-form input, .contact-form textarea {
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.1);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 1rem;
+      outline:none;
+      transition: border .3s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      border-color: var(--primary);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      text-align:center;
+      padding: 25px;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute; top: 100%; right:0;
+        flex-direction: column;
+        background: var(--surface);
+        width: 200px;
+        padding: 20px;
+        border-radius: 0 0 0 var(--radius);
+        transform: translateX(100%);
+        transition: transform .3s;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .burger { display:block; }
+      .hero h1 { font-size: 2.5rem; }
+      .avatar { width: 200px; height: 200px; font-size: 3.5rem; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+      .timeline { padding-left: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">Roda<span>Youssef</span></div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+    <div class="burger" id="burger"><i class="fa-solid fa-bars"></i></div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <p class="greeting">Hello, I'm</p>
+      <h1>Roda Youssef</h1>
+      <h2>I'm a <span class="typing" id="typed"></span></h2>
+      <p class="tagline">Highly motivated HR professional with 17+ years of experience in HR management, employee relations, payroll, and Kuwait labour law.</p>
+      <div class="hero-buttons">
+        <a href="#experience" class="btn primary">View Experience</a>
+        <a href="#contact" class="btn outline">Contact Me</a>
+      </div>
+      <div class="socials">
+        <a href="mailto:rodak@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        <a href="tel:+97100000000"><i class="fa-solid fa-phone"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <div class="avatar"><image style="width: 300px; height: 300px; border-radius: 50%;" class="hero-img" src="logo portfolio.png" alt="Roda Youssef"></image></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about section">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-wrap">
+      <div class="about-text">
+        <p>
+          I'm a passionate <strong>HR Manager & People Partner</strong> with over 17 years of experience
+          in human resources, specializing in Kuwait labour law, government regulations, visa recruitment,
+          employee relations, compensation, benefits, and payroll management.
+        </p>
+        <p>
+          I thrive in challenging environments, bringing strong organizational skills, emotional intelligence,
+          and a people-first approach to every organization I serve.
+        </p>
+        <div class="info-grid">
+          <div><strong><i class="fa-solid fa-user"></i> Name:</strong> Roda Youssef</div>
+          <div><strong><i class="fa-solid fa-envelope"></i> Email:</strong> rodakhouri14@gmail.com</div>
+          <div><strong><i class="fa-solid fa-location-dot"></i> Location:</strong> Salmiya, Kuwait</div>
+          <div><strong><i class="fa-solid fa-flag"></i> Nationality:</strong> Syrian</div>
+        </div>
+        <a href="#" class="btn primary"><i class="fa-solid fa-download"></i> Download CV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills section">
+    <h2 class="section-title">Professional Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card"><i class="fa-solid fa-scale-balanced"></i><h3>Kuwait Labour Law</h3><div class="bar"><div style="width:95%"></div></div></div>
+      <div class="skill-card"><i class="fa-solid fa-money-bill-wave"></i><h3>Payroll & Benefits</h3><div class="bar"><div style="width:95%"></div></div></div>
+      <div class="skill-card"><i class="fa-solid fa-users"></i><h3>Employee Relations</h3><div class="bar"><div style="width:90%"></div></div></div>
+      <div class="skill-card"><i class="fa-solid fa-user-tie"></i><h3>Recruitment & Visa</h3><div class="bar"><div style="width:92%"></div></div></div>
+      <div class="skill-card"><i class="fa-solid fa-chart-line"></i><h3>Performance Reviews</h3><div class="bar"><div style="width:88%"></div></div></div>
+      <div class="skill-card"><i class="fa-solid fa-file-excel"></i><h3>Excel & MS Office</h3><div class="bar"><div style="width:90%"></div></div></div>
+      <div class="skill-card"><i class="fa-solid fa-handshake"></i><h3>Negotiation</h3><div class="bar"><div style="width:85%"></div></div></div>
+      <div class="skill-card"><i class="fa-solid fa-brain"></i><h3>Leadership & EQ</h3><div class="bar"><div style="width:90%"></div></div></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section">
+    <h2 class="section-title">Work Experience</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <span class="timeline-date">March 2019 – Present</span>
+        <h3>HR Manager & People Partner</h3>
+        <p class="company">Atyab Al Marshoud Company</p>
+        <ul>
+          <li>Administering payroll and payroll cost allocation</li>
+          <li>Calculation of paid leaves, indemnities & other benefits</li>
+          <li>Organizing and facilitating the recruitment process</li>
+          <li>Negotiating staff salaries and cost cutting</li>
+          <li>Enhancing HR policies, programs and practices</li>
+          <li>Performance reviews & promotion schemes</li>
+          <li>Budgeting, leadership and team engagement</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-date">January 2013 – July 2018</span>
+        <h3>HR Officer / Personnel</h3>
+        <p class="company">Habchi & Chalhoub W.L.L</p>
+        <ul>
+          <li>Provided HR advice to department managers</li>
+          <li>Liaised with recruitment agencies abroad</li>
+          <li>Addressed employee grievances and complaints</li>
+          <li>Followed up on residency for all employees post-probation</li>
+          <li>Administered payroll and benefits calculations</li>
+          <li>Organized recruitment processes to meet company objectives</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <span class="timeline-date">June 2008 – January 2013</span>
+        <h3>Customer Service Representative</h3>
+        <p class="company">Habchi & Chalhoub W.L.L</p>
+        <ul>
+          <li>Delivered highest standards of client service</li>
+          <li>Achieved and exceeded sales targets</li>
+          <li>Collaborated with management to develop business</li>
+          <li>Processed paperwork in a timely and accurate manner</li>
+          <li>Contributed actively to a strong team environment</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="section">
+    <h2 class="section-title">Education</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <i class="fa-solid fa-user-tie"></i>
+        <h3>Bachelor's in HR Management</h3>
+        <p>Human Resources Management</p>
+      </div>
+      <div class="edu-card">
+        <i class="fa-solid fa-briefcase"></i>
+        <h3>Bachelor's in Business Marketing</h3>
+        <p>Business & Marketing</p>
+      </div>
+      <div class="edu-card">
+        <i class="fa-solid fa-book-open"></i>
+        <h3>French Literature</h3>
+        <p>Graduate Degree</p>
+      </div>
+      <div class="edu-card">
+        <i class="fa-solid fa-palette"></i>
+        <h3>Bachelor's in Art</h3>
+        <p>Craft, Drawing & Painting</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact section">
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <div><i class="fa-solid fa-envelope"></i><div><strong>Email</strong><p>rodak@gmail.com</p></div></div>
+        <div><i class="fa-solid fa-phone"></i><div><strong>Phone</strong><p>+971 0000 0000</p></div></div>
+        <div><i class="fa-solid fa-location-dot"></i><div><strong>Location</strong><p>Salmiya, Kuwait</p></div></div>
+        <div><i class="fa-solid fa-flag"></i><div><strong>Nationality</strong><p>Syrian</p></div></div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit" class="btn primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Roda Youssef. All rights reserved.</p>
+  </footer>
+
+  <script>
+    /* ---------- TYPING EFFECT ---------- */
+    const words = ["HR Manager", "People Partner", "HR Coordinator", "Payroll Specialist", "Recruitment Expert"];
+    let wIndex = 0, cIndex = 0, deleting = false;
+    const typed = document.getElementById('typed');
+
+    function type() {
+      const word = words[wIndex];
+      if (!deleting) {
+        typed.textContent = word.substring(0, cIndex++);
+        if (cIndex > word.length) { deleting = true; setTimeout(type, 1500); return; }
+      } else {
+        typed.textContent = word.substring(0, cIndex--);
+        if (cIndex < 0) { deleting = false; wIndex = (wIndex + 1) % words.length; }
+      }
+      setTimeout(type, deleting ? 60 : 120);
+    }
+    type();
+
+    /* ---------- THEME TOGGLE ---------- */
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      themeBtn.innerHTML = document.body.classList.contains('light')
+        ? '<i class="fa-solid fa-sun"></i>'
+        : '<i class="fa-solid fa-moon"></i>';
+    });
+
+    /* ---------- MOBILE MENU ---------- */
+    const burger = document.getElementById('burger');
+    const navLinks = document.querySelector('.nav-links');
+    burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    document.querySelectorAll('.nav-links a').forEach(a =>
+      a.addEventListener('click', () => navLinks.classList.remove('open'))
+    );
+
+    /* ---------- SKILL BARS ANIMATION ---------- */
+    const bars = document.querySelectorAll('.bar > div');
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const w = e.target.style.width;
+          e.target.style.width = '0';
+          setTimeout(() => e.target.style.width = w, 100);
+        }
+      });
+    }, { threshold: 0.3 });
+    bars.forEach(b => skillObserver.observe(b));
+
+    /* ---------- SCROLL REVEAL ---------- */
+    const reveal = document.querySelectorAll('.skill-card, .timeline-item, .edu-card, .about-text');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = 1;
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.2 });
+    reveal.forEach(el => {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'all .6s ease';
+      revealObs.observe(el);
+    });
+
+    /* ---------- CONTACT FORM ---------- */
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('✅ Thank you! Your message has been received. Roda will get back to you soon.');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
